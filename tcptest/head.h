@@ -12,6 +12,13 @@
 #include <netinet/ip.h>
 #include <arpa/inet.h>
 #include <pthread.h>
+#include <sys/epoll.h>
+
+typedef struct _yaohe{
+	char vcode[5];
+	char state;
+} yaohe;
+
 
 
 #endif
