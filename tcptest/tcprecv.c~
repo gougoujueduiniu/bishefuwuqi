@@ -19,10 +19,6 @@ void translate(char *buff,int sockfd)
 	}
 
 	p=strstr(buff,"#");
-	if(p==NULL)
-	{
-		return;
-	}
 	flag = 0;
 	ch = p[1];
 	if(ch == '1')

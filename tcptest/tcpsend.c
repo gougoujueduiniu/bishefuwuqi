@@ -57,6 +57,7 @@ int main(char argc,const char *argv[])
 
 	while(1)
 	{
+		printf("please input \n");
 		fgets(tempbuff,32,stdin);
 		send(sockfd,tempbuff,strlen(tempbuff),0);
 		memset(tempbuff,0,sizeof(tempbuff));
