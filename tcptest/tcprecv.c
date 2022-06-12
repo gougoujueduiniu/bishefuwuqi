@@ -8,10 +8,10 @@ void translate(char *buff,int sockfd)
 {
 	char *p = NULL;
 	char ch = 0;
-	char tempbuff[32] = {0};
+	char tempbuff[128] = {0};
 	int i = 0;
 	int flag = 0;
-	int fd = open("./log.txt",O_RDWR,O_CREAT | O_TRUNC);
+	int fd = open("./log.txt",O_RDWR,O_CREAT);
 	if(fd == -1)
 	{
 		perror("fail to open");
@@ -36,11 +36,15 @@ void translate(char *buff,int sockfd)
 		{
 			if(a[i].state == 0)
 			{
-				send(shebeifd,"#D\n",2,0);
+				sprintf(tempbuff,"#D%d\n",i);
+				send(shebeifd,tempbuff,strlen(tempbuff),0);
 				send(sockfd,"ok",2,0);
-				recv(shebeifd,tempbuff,3,0);
+				recv(shebeifd,tempbuff,128,0);
 				printf("A DE esp8266:%s\n",tempbuff);
 				printf("the mdicine has been placed %d the vcode is %c%c%c%c\n",i,p[2],p[3],p[4],p[5]);
+				memset(tempbuff,0,sizeof(tempbuff));
+				sprintf(tempbuff,"the mdicine has been placed %d,the verify code is %c%c%c%c,please take is away",i,p[2],p[3],p[4],p[5]);
+				send(sockfd,tempbuff,strlen(tempbuff),0);
 				strncpy(a[i].vcode,p+2,4);
 				a[i].state = 1;
 				break;
@@ -75,7 +79,7 @@ void translate(char *buff,int sockfd)
 	}
 	else if(ch == 'C')
 	{
-		write(fd,p+2,5);
+		write(fd,p+2,6);
 	}
 	
 	close(fd);
