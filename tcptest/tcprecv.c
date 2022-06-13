@@ -73,8 +73,9 @@ void translate(char *buff,int sockfd)
 			}
 		}
 		if(flag == 0)
-		{
-			send(shebeifd,"#H\n",3,0);
+		{	
+			printf("code is wrong\n");
+			send(shebeifd,"#H\n",4,0);
 		}
 	}
 	else if(ch == 'C')
